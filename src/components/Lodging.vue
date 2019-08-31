@@ -1,202 +1,170 @@
 <template>
-  <body>
-    <div id="myBtnContainer">
-      <button class="btn active" onclick="filterSelection('all')">
-        Show all
-      </button>
-      <button class="btn" onclick="filterSelection('Hall')">Hall</button>
-      <button class="btn" onclick="filterSelection('RC')">RCs</button>
-      <button class="btn" onclick="filterSelection('PGP')">PGP</button>
+<body>
+  <div class="select">
+    <b-jumbotron class="jumbo">
+      <template slot="header" class="text-center">Select your preferred lodging type</template>
+      <b-button v-b-modal.residence_explain>Unsure of the differences?</b-button>
+      <b-modal size="xl" class = "residence_modal" id="residence_explain" hide-footer>
+        <h3 text-variant="black">What are the differences among the residences in NUS?</h3>
+        <br/>
+        <div> 
+          <ul class="list-unstyled">
+            <b-media tag="li">
+              <h5 class="mt-0 mb-1">Halls</h5>
+              <p class="mb-0">
+                Emphasis is placed on student development through active involvement in community work, sport and the arts
+              </p>
+            </b-media>
+
+            <b-media tag="li" class="my-4">
+              <h5 class="mt-0 mb-1">Residential Colleges</h5>
+              <p class="mb-0">
+                Emphasis on integrated living and learening experiences. Residents not only read modules which are multidisciplinary, innovative and taught in small classes, but are also exposed to a host of different settings through Master’s Teas, forums, and talks where they actively engage with distinguished visitors and interesting speakers.
+              </p>
+            </b-media>
+            <b-media tag="li">
+              <h5 class="mt-0 mb-1">PGPR</h5>
+              <p class="mb-0">
+                Provides students with a minimal framework of community engagement with the flexibility to experience independent living
+              </p>
+            </b-media>
+          </ul>
+        </div> 
+      </b-modal>
+      <br>
+      <div class="test text-center">
+        <div class="filter">
+          <label class="options">
+            <input type="radio" v-model="selectedCategory" value="All">
+            All
+          </label>
+          <label class="options">
+            <input type="radio" v-model="selectedCategory" value="hall">
+            Halls
+          </label>
+          <label class="options">
+            <input type="radio" v-model="selectedCategory" value="college">
+            Residential College
+          </label>
+          <label class="options">
+            <input type="radio" v-model="selectedCategory" value="PGP">
+            PGP
+          </label>
+        </div>
+      </div>
+    </b-jumbotron>
+  </div>
+  <div class="row">
+    <div class="col-md-3 text-center" v-for="lodg in filteredLodging" v-bind:key="lodg.name">
+      <router-link v-bind:to="{name:'lodgingDashboard', params: {lodging_name: lodg.name}}">
+        <img v-bind:src="lodg.img" style="width:100%">
+        <h4>{{ lodg.name }}</h4>
+      </router-link>
     </div>
-    <div class="row">
-      <div class="column hall">
-        <div class="content">
-          <img
-            src="../assets/temasekhall.jpg"
-            alt="temasekhall"
-            style="width:100%"
-          />
-          <h4>Temasek Hall</h4>
-        </div>
-      </div>
-      <div class="column hall">
-        <div class="content">
-          <img
-            src="../assets/eusoffhall.jpg"
-            alt="eusoffhall"
-            style="width:100%"
-          />
-          <h4>Eusoff Hall</h4>
-        </div>
-      </div>
-      <div class="column hall">
-        <div class="content">
-          <img
-            src="../assets/raffleshall.jpg"
-            alt="raffleshall"
-            style="width:100%"
-          />
-          <h4>Raffles Hall</h4>
-        </div>
-      </div>
-      <div class="column hall">
-        <div class="content">
-          <img
-            src="../assets/sheareshall.jpg"
-            alt="sheareshall"
-            style="width:100%"
-          />
-          <h4>Sheares Hall</h4>
-        </div>
-      </div>
-      <div class="column hall">
-        <div class="content">
-          <img
-            src="../assets/kentridgehall.jpg"
-            alt="kentridgehall"
-            style="width:100%"
-          />
-          <h4>Kent Ridge Hall</h4>
-        </div>
-      </div>
-      <div class="column hall">
-        <div class="content">
-          <img
-            src="../assets/kingedwardhall.jpg"
-            alt="kingedwardhall"
-            style="width:100%"
-          />
-          <h4>King Edward Hall</h4>
-        </div>
-      </div>
-      <div class="column RC">
-        <div class="content">
-          <img
-            src="../assets/kingedwardhall.jpg"
-            alt="kingedwardhall"
-            style="width:100%"
-          />
-          <h4>Tembusu College</h4>
-        </div>
-      </div>
-      <div class="column RC">
-        <div class="content">
-          <img
-            src="../assets/kingedwardhall.jpg"
-            alt="kingedwardhall"
-            style="width:100%"
-          />
-          <h4>College of Alice and Peter Tan</h4>
-        </div>
-      </div>
-      <div class="column RC">
-        <div class="content">
-          <img
-            src="../assets/kingedwardhall.jpg"
-            alt="kingedwardhall"
-            style="width:100%"
-          />
-          <h4>RC4</h4>
-        </div>
-      </div>
-      <div class="column RC">
-        <div class="content">
-          <img
-            src="../assets/kingedwardhall.jpg"
-            alt="kingedwardhall"
-            style="width:100%"
-          />
-          <h4>Cinnamon College</h4>
-        </div>
-      </div>
-      <div class="column RC">
-        <div class="content">
-          <img
-            src="../assets/kingedwardhall.jpg"
-            alt="kingedwardhall"
-            style="width:100%"
-          />
-          <h4>Ridge View Residential College</h4>
-        </div>
-      </div>
-      <div class="column PGP">
-        <div class="content">
-          <img src="../assets/PGP.jpg" alt="PGP" style="width:100%" />
-          <h4>PGP</h4>
-        </div>
-      </div>
-    </div>
-  </body>
+  </div>
+</body>
 </template>
 
-<style>
-* {
-  box-sizing: border-box;
+<script>
+class Lodging {
+  constructor(name, cat, img) {
+    this.name = name;
+    this.cat = cat;
+    this.img = img;
+  }
 }
+export default {
+  name: "halls",
+  data() {
+    return {
+      //search: "",
+      lodgings: [
+        new Lodging(
+          "Temasek Hall",
+          "hall",
+          require("../assets/temasekhall.jpg")
+        ),
+        new Lodging(
+          "Raffles Hall",
+          "hall",
+          require("../assets/raffleshall.jpg")
+        ),
+        new Lodging("Eusoff Hall", "hall", require("../assets/eusoffhall.jpg")),
+        new Lodging(
+          "Kent Ridge Hall",
+          "hall",
+          require("../assets/kentridgehall.jpg")
+        ),
+        new Lodging(
+          "Sheares Hall",
+          "hall",
+          require("../assets/sheareshall.jpg")
+        ),
+        new Lodging(
+          "King Edward Hall",
+          "hall",
+          require("../assets/kingedwardhall.jpg")
+        ),
+        new Lodging("Tembusu", "college", require("../assets/tembusu.jpg")),
+        new Lodging(
+          "College of Alice and Peter Tan",
+          "college",
+          require("../assets/capt.jpg")
+        ),
+        new Lodging("RC4", "college", require("../assets/rc4.jpg")),
+        new Lodging(
+          "Cinnamon College",
+          "college",
+          require("../assets/USP.jpg")
+        ),
+        new Lodging(
+          "Ridge View Residential College",
+          "college",
+          require("../assets/rvrc.jpg")
+        ),
+        new Lodging("PGP", "PGP", require("../assets/PGPR.jpg"))
+      ],
+      selectedCategory: "All"
+    };
+  },
+  computed: {
+    filteredLodging: function() {
+      var vm = this;
+      var category = vm.selectedCategory;
 
-body {
-  background-color: #f1f1f1;
-  padding: 20px;
-  font-family: Arial;
-}
+      if (category === "All") {
+        return vm.lodgings;
+      } else {
+        return vm.lodgings.filter(function(lodg) {
+          return lodg.cat === category;
+        });
+      }
+    }
+  }
+};
+</script>
 
-/* Center website */
-.main {
-  max-width: 1000px;
-  margin: auto;
-}
-
-h1 {
-  font-size: 50px;
-  word-break: break-all;
-}
-
-/* Add padding BETWEEN each column (if you want) */
-.row,
-.row > .column {
-  padding: 8px;
-}
-
-/* Create three equal columns that floats next to each other */
-.column {
-  float: left;
-  width: 33.33%;
-  //display: none; /* Hide columns by default */
-}
-
-/* Clear floats after rows */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Content */
-.content {
-  background-color: #d3d3d3;
-  padding: 10px;
-}
-/* Style the buttons */
-.btn {
-  border: none;
-  outline: none;
-  padding: 12px 16px;
-  background-color: white;
-  cursor: pointer;
-}
-
-.show {
-  display: block;
-}
-
-/* Add a grey background color on mouse-over */
-.btn:hover {
-  background-color: #ddd;
-}
-
-/* Add a dark background color to the active button */
-.btn.active {
-  background-color: #666;
+<style scoped>
+.jumbo {
+  padding-top: 120px;
+  background-color: #EF7C00;
+  width: full;
   color: white;
+}
+.options {
+  padding-right: 80px;
+}
+
+.row {
+  padding-right: 20px;
+  padding-left: 20px;
+}
+
+.residence_modal {
+  color: black;
+}
+
+.list_unstyled{
+  display: inline; 
 }
 </style>

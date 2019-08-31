@@ -1,89 +1,47 @@
 <template>
-  <body>
-    <div class="jc_selection_pane" style="float:left">
-      <img
-        id="jc_image"
-        src="../assets/jc_image.jpg"
-        @click="DoSomething($event);"
-      />
-    </div>
+<body>
+  <div class="selection_overall">
+    <router-link to="/courseSearch">
+      <b-card img-src="../assets/general.jpg" img-alt="Card image" img-left class="mb-3">
+        <b-card-text>
+          <h3> General </h3>
+          <p>Description of what general is </p>
+        </b-card-text>
+      </b-card>
+    </router-link>
+    <router-link to="/JCrecommendation">
+      <b-card img-src="https://placekitten.com/300/300" img-alt="Card image" img-right>
+        <b-card-text>
+          <h3>Personalized</h3>
+          <p>description of what personalized is</p>
+        </b-card-text>
+      </b-card>
+    </router-link>
+  </div>
 
-    <div class="poly_selection_pane" style="float:right">
-      <img
-        id="poly_image"
-        src="../assets/poly_image.jpg"
-        @click="DoSomething($event);"
-      />
-    </div>
-  </body>
+  <!--  <div class="jc_selection_pane" style="float:left"> 
+    <router-link to="/JCrecommendation">
+    <img id="jc_image" src="../assets/jc_image.jpg"> 
+    </router-link> 
+  </div>
+
+  <div class="poly_selection_pane" style="float:right"> 
+    <router-link to="/polyRecommendation"> 
+    <img id="poly_image" src="../assets/poly_image.jpg"> 
+    </router-link> 
+  </div>-->
+</body>
 </template>
 
 <script>
 export default {
   name: "selectionPane",
-  props: {},
-  methods: {
-    DoSomething: function(event) {
-      // make the selection pane come up
-      let targetID = event.currentTarget.id;
-      if (targetID == "jc_image") {
-        //something
-        var doc = prompt("Please enter your rank point", "90.0", {
-          confirmButtonText: "OK!",
-          cancelButonText: "cancel"
-        });
-        var valid = doc.match(/^\d+\.\d{0,2}$/); //check that input is float with 2dp at most
-        if (valid) {
-          alert(doc);
-          // use value from doc to retrieve search results
-        } else {
-          var errorMessage = "Enter to at least 1 d.p";
-          alert(errorMessage);
-        }
-        console.log("jc_selected!");
-      } else if (targetID == "poly_image") {
-        //something
-        var doc_1 = prompt("Please enter your course", "Computer Science", {
-          confirmButtonText: "OK!",
-          cancelButonText: "cancel"
-        });
-        var doc_2 = prompt("Please enter your GPA", "5.0", {
-          confirmButtonText: "OK!",
-          cancelButonText: "cancel",
-          inputPattern: /^\d+\.\d{0,2}$/
-        });
-
-        // check input is float with 2 d.p, and course input is a string
-        var valid = doc_2.match(/^\d+\.\d{0,2}$/) && doc_1.match(/[A-Z]/g);
-        if (valid) {
-          alert("Your course is: " + doc_1 + " and your GPA is: " + doc_2);
-
-          // use values from doc_1 and doc_2 to retrieve search results
-        } else {
-          var errorMessage = "Please provide input in the correct format.";
-          alert(errorMessage);
-          console.log("poly selected!");
-        }
-      }
-    }
-  }
+  props: {}
 };
 </script>
 
 <style scoped>
-#jc_image {
-  background: url("../assets/jc_image.jpg");
-  width: 50%;
-  position: absolute;
-  left: 0px;
-  height: 100%;
-}
-
-#poly_image {
-  background: url("../assets/poly_image.jpg");
-  width: 50%;
-  position: absolute;
-  right: 0px;
-  height: 100%;
+.selection_overall {
+  padding-top: 70px;
 }
 </style>

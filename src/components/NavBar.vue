@@ -1,22 +1,21 @@
 <template>
-  <body>
-    <nav class="topnav" topmargin="0">
-      <a>Home</a> <a>Course</a> <a>Lodging</a>
-    </nav>
-  </body>
+<body>
+  <b-navbar class="topnav" topmargin="0">
+    <img src="../assets/applogo.jpg" width="80" height="70">
+    <router-link to="/">Home</router-link>
+    <router-link to="/courseSearch">Course</router-link>
+    <router-link to="/lodging">Lodging</router-link>
+  </b-navbar>
+</body>
 </template>
 
-<style>
-body {
-  margin: 0;
-  top: 0px;
-  padding: 0;
-}
+<style scoped>
 .topnav {
-  //margin: 100;
   background-color: #003d7c;
   overflow: hidden;
-  //height: 30%;
+  position: fixed;
+  width: 100vw;
+  z-index: 200;
 }
 
 /* Style the links inside the navigation bar */
